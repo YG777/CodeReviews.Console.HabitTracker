@@ -1,4 +1,5 @@
 ﻿using habitTracker;
+using System.ComponentModel.Design;
 using System.Diagnostics.CodeAnalysis;
 
 namespace HabitTracker
@@ -70,29 +71,46 @@ namespace HabitTracker
         {
             var record = _recordsDB.GetRecordById(Id);
             Console.WriteLine($"This is the record you want to update");
-            Console.WriteLine($"ID: {record.Id}, DATE: {record.Date} Enter 1, DURATION: {record.Duration} Enter 2, DISTANCE: {record.Distance} Enter 3");
-            Console.WriteLine("Enter 5 to submit");
+            Console.WriteLine($"ID: {record.Id}, DATE: {record.Date} <-- Enter 1, DURATION: {record.Duration} <-- Enter 2, DISTANCE: {record.Distance} <-- Enter 3");
+         
             var inputInProgress = true;
-            var input = Console.ReadLine();
+
             while (inputInProgress)
             {
-                switch (input)
+                var input = Console.ReadLine();
+
+                if (input == "1")
                 {
-                    case "1":
-                        record.Date = input;
-                        break;
-                    case "2":
-                        record.Date = input;
-                        break;
-                    case "3":
-                        record.Date = input;
-                        break;
-                    case "5":
-                        inputInProgress = false; 
-                        break;
+                    Console.WriteLine("enter new value for Date");
+                    record.Date = Console.ReadLine();
+                    Console.WriteLine("this value is udated, select another option or enter 5 to submit");
+                } 
+                 if(input == "2") 
+                {
+                    Console.WriteLine("enter new value for Duration");
+                    record.Duration = int.Parse(Console.ReadLine());
+                    Console.WriteLine("this value is udated, select another option or enter 5 to submit");
+                }
+                if(input == "3") 
+                {
+                    Console.WriteLine("enter new value for Distamce");
+                    record.Distance = int.Parse(Console.ReadLine());
+                    Console.WriteLine("this value is udated, select another option or enter 5 to submit");
+                } 
+                if(input == "5")
+                {
+                    Console.WriteLine("Changes submitted. You will return to the main menu.");
+                    _recordsDB.UpdateRecord(record);
+                    Console.WriteLine("Your record is updated");
+                    inputInProgress = false;
+                    GoBackToMenu();
+
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input, please try again");
                 }
             }
-        _recordsDB.UpdateRecord(record);
             GoBackToMenu();
         }
 
